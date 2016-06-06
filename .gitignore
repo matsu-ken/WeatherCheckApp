@@ -1,3 +1,4 @@
-# objとbinフォルダは無視
+*.suo
 obj
 bin
+log
