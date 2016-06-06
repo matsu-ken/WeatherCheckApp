@@ -1,0 +1,9 @@
+C:\Users\matsuoka\Documents\work_place\WeatherCheckApp\WeatherCheckApp\WeatherCheckApp\bin\Debug\WeatherCheckApp.exe.config
+C:\Users\matsuoka\Documents\work_place\WeatherCheckApp\WeatherCheckApp\bin\Debug\WeatherCheckApp.exe.config
+C:\Users\matsuoka\Documents\work_place\WeatherCheckApp\WeatherCheckApp\bin\Debug\WeatherCheckApp.exe
+C:\Users\matsuoka\Documents\work_place\WeatherCheckApp\WeatherCheckApp\bin\Debug\WeatherCheckApp.pdb
+C:\Users\matsuoka\Documents\work_place\WeatherCheckApp\WeatherCheckApp\obj\Debug\WeatherCheckApp.csprojResolveAssemblyReference.cache
+C:\Users\matsuoka\Documents\work_place\WeatherCheckApp\WeatherCheckApp\obj\Debug\WeatherCheckApp.Properties.Resources.resources
+C:\Users\matsuoka\Documents\work_place\WeatherCheckApp\WeatherCheckApp\obj\Debug\WeatherCheckApp.csproj.GenerateResource.Cache
+C:\Users\matsuoka\Documents\work_place\WeatherCheckApp\WeatherCheckApp\obj\Debug\WeatherCheckApp.exe
+C:\Users\matsuoka\Documents\work_place\WeatherCheckApp\WeatherCheckApp\obj\Debug\WeatherCheckApp.pdb
