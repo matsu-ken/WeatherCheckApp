@@ -72,14 +72,10 @@ namespace WeatherCheckApp {
         listBox1.DataSource = new BindingSource(dictionary, null);
         listBox1.DisplayMember = "Value";
         listBox1.ValueMember = "Key";
+      //listBox1.ClearSelected();
 
-    }
 
-    private void listBox1_SelectedIndexChanged(object sender, EventArgs e) {
-      ListBox listbox = (ListBox)sender;
-      listbox.DisplayMember = "Value";
-      listbox.ValueMember = "Key";
-      var url = "http://weather.livedoor.com/forecast/webservice/json/v1?city=" + listbox.SelectedValue;
+      var url = "http://weather.livedoor.com/forecast/webservice/json/v1?city=" + listBox1.SelectedValue;
       var req = WebRequest.Create(url);
 
       using (var res = req.GetResponse())
@@ -107,6 +103,39 @@ namespace WeatherCheckApp {
         label2.Text = "\n\n<" + dateLabel1 + ">" + "\n" + date1 + "\n天気 : " + telop1;
         label3.Text = "\n\n<" + dateLabel2 + ">" + "\n" + date2 + "\n天気 : " + telop2;
       }
+    }
+
+    private void listBox1_SelectedIndexChanged(object sender, EventArgs e) {
+      ListBox listbox = (ListBox)sender;
+
+      //var url = "http://weather.livedoor.com/forecast/webservice/json/v1?city=" + listbox.SelectedItems;
+      //var req = WebRequest.Create(url);
+
+      //using (var res = req.GetResponse())
+      //using (var s = res.GetResponseStream()) {
+      //  dynamic json = DynamicJson.Parse(s);
+
+      //  dynamic today = json.forecasts[0];
+      //  string dateLabel = today.dateLabel;
+      //  string date = today.date;
+      //  string telop = today.telop;
+      //  var situation = json.description.text;
+
+      //  dynamic tomorrow = json.forecasts[1];
+      //  string dateLabel1 = tomorrow.dateLabel;
+      //  string date1 = tomorrow.date;
+      //  string telop1 = tomorrow.telop;
+
+      //  dynamic dayaftertomorrow = json.forecasts[2];
+      //  string dateLabel2 = dayaftertomorrow.dateLabel;
+      //  string date2 = dayaftertomorrow.date;
+      //  string telop2 = dayaftertomorrow.telop;
+
+      //  label1.Text = listBox1.Text + "\n\n<" + dateLabel + ">" + "\n" + date
+      //    + "\n天気 : " + telop + "\n\n\n" + situation;
+      //  label2.Text = "\n\n<" + dateLabel1 + ">" + "\n" + date1 + "\n天気 : " + telop1;
+      //  label3.Text = "\n\n<" + dateLabel2 + ">" + "\n" + date2 + "\n天気 : " + telop2;
+      //}
     }
   }
 }
