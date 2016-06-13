@@ -96,31 +96,18 @@ namespace WeatherCheckApp {
       using (System.IO.Stream stream = response.GetResponseStream()) {
         //streamをdynamic型に変換
         dynamic json = DynamicJson.Parse(stream);
-        
-        //今日の情報
+        //和暦でDateTime型を文字列に変換
+        CultureInfo japaneseCalendar = new CultureInfo("ja-JP", false);
+        japaneseCalendar.DateTimeFormat.Calendar = new JapaneseCalendar();
+
+        this.label1.Text = listBox1.Text;
+      //今日の情報
+        try {        
           dynamic today = json.forecasts[0];
           string dateLabel = today.dateLabel;
           string date = today.date;
-        //明日の情報
-          dynamic tomorrow = json.forecasts[1];
-          string dateLabel1 = tomorrow.dateLabel;
-          string date1 = tomorrow.date;
-        //明後日の情報
-          dynamic dayAfterTomorrow = json.forecasts[2];
-          string dateLabel2 = dayAfterTomorrow.dateLabel;
-          string date2 = dayAfterTomorrow.date;
-
-        //天気概況
-          string situation = json.description.text;
-        //dateをDateTime型に変換
           DateTime dt = DateTime.Parse(date);
-          DateTime dt1 = DateTime.Parse(date1);
-          DateTime dt2 = DateTime.Parse(date2);
-        //和暦でDateTime型を文字列に変換
-          CultureInfo japaneseCalendar = new CultureInfo("ja-JP", false);
-          japaneseCalendar.DateTimeFormat.Calendar = new JapaneseCalendar();
-
-        //今日の気温(Max & Min)
+          //今日の気温(Max & Min)
           StringBuilder tempMax = new StringBuilder();
           dynamic todayTempMax = today.temperature.max;
           if (todayTempMax != null) {
@@ -137,7 +124,25 @@ namespace WeatherCheckApp {
           else {
             tempMin.Append("---");
           }
-        //明日の気温(Max & Min)
+
+          this.Date.Text = "<" + dateLabel + ">\n\n" + dt.ToString("gy年MM月dd日(ddd)", japaneseCalendar);
+          this.Temperature.Text = "最高気温 : " + tempMax.ToString() + "\n最低気温 : " + tempMin.ToString();
+          this.pictureBox1.ImageLocation = json.forecasts[0].image.url;
+
+        }
+        catch {
+          this.Date.Text = "<----->\n\n-----";
+          this.Temperature.Text = "-----\n-----";
+          this.pictureBox1.ImageLocation = "";
+        }
+
+      //明日の情報
+        try {         
+          dynamic tomorrow = json.forecasts[1];
+          string dateLabel1 = tomorrow.dateLabel;
+          string date1 = tomorrow.date;
+          DateTime dt1 = DateTime.Parse(date1);
+          //明日の気温(Max & Min)
           StringBuilder tempMax1 = new StringBuilder();
           dynamic tomorrowTempMax = tomorrow.temperature.max;
           if (tomorrowTempMax != null) {
@@ -154,46 +159,58 @@ namespace WeatherCheckApp {
           else {
             tempMin1.Append("---");
           }
-        //明後日の気温(Max & Min)
+
+          this.Date1.Text = "<" + dateLabel1 + ">\n\n" + dt1.ToString("gy年MM月dd日(ddd)", japaneseCalendar);
+          this.Temperature1.Text = "最高気温 : " + tempMax1.ToString() + "\n最低気温 : " + tempMin1.ToString();
+          this.pictureBox2.ImageLocation = json.forecasts[1].image.url;
+        }
+        catch {
+          this.Date1.Text = "<----->\n\n-----";
+          this.Temperature1.Text = "-----\n-----";
+          this.pictureBox2.ImageLocation = "";
+        }
+
+      //明後日の情報
+        try {
+          dynamic dayAfterTomorrow = json.forecasts[2];
+          string dateLabel2 = dayAfterTomorrow.dateLabel;
+          string date2 = dayAfterTomorrow.date;
+          DateTime dt2 = DateTime.Parse(date2);
+          //明後日の気温(Max & Min)
           StringBuilder tempMax2 = new StringBuilder();
           dynamic dayafterTempMax = dayAfterTomorrow.temperature.max;
           if (dayafterTempMax != null) {
             tempMax2.AppendFormat("{0}℃", dayafterTempMax.celsius);
           }
           else {
-          tempMax2.Append("---");
+            tempMax2.Append("---");
           }
           StringBuilder tempMin2 = new StringBuilder();
           dynamic dayafterTempMin = dayAfterTomorrow.temperature.min;
           if (dayafterTempMin != null) {
-          tempMin2.AppendFormat("{0}℃", dayafterTempMin.celsius);
+            tempMin2.AppendFormat("{0}℃", dayafterTempMin.celsius);
           }
           else {
             tempMin2.Append("---");
           }
 
-          this.label1.Text = listBox1.Text;
-          this.Date.Text = "<" + dateLabel + ">\n\n" + dt.ToString("gy年MM月dd日(ddd)", japaneseCalendar);
-          this.Date1.Text = "<" + dateLabel1 + ">\n\n" + dt1.ToString("gy年MM月dd日(ddd)", japaneseCalendar);
           this.Date2.Text = "<" + dateLabel2 + ">\n\n" + dt2.ToString("gy年MM月dd日(ddd)", japaneseCalendar);
-      
-          this.Temperature.Text = "最高気温 : " + tempMax.ToString() + "\n最低気温 : " + tempMin.ToString();
-          this.Temperature1.Text = "最高気温 : " + tempMax1.ToString() + "\n最低気温 : " + tempMin1.ToString();
           this.Temperature2.Text = "最高気温 : " + tempMax2.ToString() + "\n最低気温 : " + tempMin2.ToString();
-          
-          this.Situation.Text = situation;
-
-        //天気画像
-          this.pictureBox1.ImageLocation = json.forecasts[0].image.url;
-          this.pictureBox2.ImageLocation = json.forecasts[1].image.url;
           this.pictureBox3.ImageLocation = json.forecasts[2].image.url;
-
-        
-          
-         
-
-         
-          
+        }
+        catch {
+          this.Date2.Text = "<----->\n\n-----";
+          this.Temperature2.Text = "-----\n-----";
+          this.pictureBox3.ImageLocation = "";
+        }
+        //天気概況
+        try { 
+          string situation = json.description.text;
+          this.Situation.Text = situation;
+        }
+        catch {
+          this.Situation.Text = "----------";
+        }
       }
     }
   }
